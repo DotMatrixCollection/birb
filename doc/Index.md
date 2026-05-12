@@ -1,13 +1,15 @@
-# IRB
+# birb
 
 [![Gem Version](https://badge.fury.io/rb/irb.svg)](https://badge.fury.io/rb/irb)
-[![build](https://github.com/ruby/irb/actions/workflows/test.yml/badge.svg)](https://github.com/ruby/irb/actions/workflows/test.yml)
+[![build](https://github.com/OhMyRuby/birb/actions/workflows/test.yml/badge.svg)](https://github.com/OhMyRuby/birb/actions/workflows/test.yml)
 
 ## Overview
 
-IRB stands for "Interactive Ruby" and is a tool to interactively execute Ruby expressions read from the standard input. The `irb` command from your shell will start the interpreter.
+`birb` is OhMyRuby's fork of IRB. It keeps the same interactive Ruby foundation while giving the fork room to experiment with the terminal experience and release independently. For now, the familiar `irb` command still starts the interpreter unless you explicitly use the fork's `birb` executable.
 
-IRB provides a shell-like interface that supports user interaction with the Ruby interpreter. It operates as a *read-eval-print loop* ([REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)) that:
+IRB stands for "Interactive Ruby" and is a tool to interactively execute Ruby expressions read from the standard input. The `irb` or `birb` command from your shell will start the interpreter.
+
+IRB provides a shell-like interface that supports user interaction with the Ruby interpreter. `birb` operates as the same *read-eval-print loop* ([REPL](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop)) that:
 
 - **Reads** each character as you type. You can modify the IRB context to change the way input works. See [Input](#label-Input).
 - **Evaluates** the code each time it has read a syntactically complete passage.
@@ -17,7 +19,7 @@ IRB provides a shell-like interface that supports user interaction with the Ruby
 
 > **Note**
 >
-> IRB is a default gem of Ruby, so you shouldn't need to install it separately. However, if you're using Ruby 2.6 or later and want to upgrade/install a specific version of IRB, follow these steps.
+> Upstream IRB is a default gem of Ruby, so you shouldn't need to install it separately. `birb` currently keeps the same gem packaging, so the installation steps below still use the `irb` gem name.
 
 To install it with `bundler`, add this line to your application's Gemfile:
 
@@ -41,11 +43,11 @@ $ gem install irb
 
 > **Note**
 >
-> We're working hard to match Pry's variety of powerful features in IRB. Track our progress or find contribution ideas in [COMPARED_WITH_PRY.md](./COMPARED_WITH_PRY.md).
+> Upstream has been steadily closing the gap with Pry's feature set. This fork inherits that work and tracks the comparison in [COMPARED_WITH_PRY.md](./COMPARED_WITH_PRY.md).
 
 ### Starting IRB
 
-You can start a fresh IRB session by typing `irb` in your terminal. In the session, you can evaluate Ruby expressions or prototype small Ruby scripts. Input is executed when it is syntactically complete.
+You can start a fresh session by typing `irb` or `birb` in your terminal. In the session, you can evaluate Ruby expressions or prototype small Ruby scripts. Input is executed when it is syntactically complete.
 
 ```console
 $ irb

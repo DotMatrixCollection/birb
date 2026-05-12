@@ -2,9 +2,9 @@
 
 What are your expected behavior and actual behavior of your environment?
 
-## Result of irb_info
+## Result of birb / irb_info
 
-Please paste the result of `irb_info` command in IRB.
+Please paste the result of the `irb_info` command in birb.
 
 ex.)
 

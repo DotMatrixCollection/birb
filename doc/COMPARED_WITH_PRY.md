@@ -1,6 +1,6 @@
 # Comparison with Pry
 
-👋 IRB is on a mission to match feature parity with Pry. This document is here to help us track the similarities and differences between the two.
+👋 Upstream IRB is on a mission to match feature parity with Pry, and `birb` inherits that mission as a fork. This document helps track the similarities and differences between the two.
 
 Feel free to chip in and update this table - we appreciate your help!
 

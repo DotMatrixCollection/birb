@@ -1,8 +1,8 @@
-# Configure IRB
+# Configure birb / IRB
 
 ## Configuration Sources
 
-IRB configurations can be set through multiple sources, each with its own precedence:
+`birb` currently uses the same IRB configuration model, and configurations can be set through multiple sources, each with its own precedence:
 
 1. **Command-Line Options**: When some options are specified when starting IRB, they can override default settings.
 2. **Configuration File**: If present, IRB reads a configuration file containing Ruby code to set configurations.
