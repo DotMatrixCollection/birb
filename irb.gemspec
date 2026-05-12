@@ -11,14 +11,14 @@ Gem::Specification.new do |spec|
   spec.authors       = ["aycabta", "Keiju ISHITSUKA"]
   spec.email         = ["aycabta@gmail.com", "keiju@ruby-lang.org"]
 
-  spec.summary       = %q{Interactive Ruby command-line tool for REPL (Read Eval Print Loop).}
-  spec.description   = %q{Interactive Ruby command-line tool for REPL (Read Eval Print Loop).}
-  spec.homepage      = "https://github.com/ruby/irb"
+  spec.summary       = %q{birb: OhMyRuby's fork of the IRB interactive Ruby REPL.}
+  spec.description   = %q{birb is OhMyRuby's fork of IRB, the interactive Ruby command-line tool for REPL (Read Eval Print Loop).}
+  spec.homepage      = "https://github.com/OhMyRuby/birb"
   spec.licenses      = ["Ruby", "BSD-2-Clause"]
 
   spec.metadata["homepage_uri"] = spec.homepage
   spec.metadata["source_code_uri"] = spec.homepage
-  spec.metadata["documentation_uri"] = "https://ruby.github.io/irb/"
+  spec.metadata["documentation_uri"] = "#{spec.homepage}/tree/master/doc"
   spec.metadata["changelog_uri"] = "#{spec.homepage}/releases"
 
   spec.files         = [
