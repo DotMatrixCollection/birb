@@ -52,8 +52,7 @@ module IRB
       else
         irb = Irb.new
 
-        # Only display the banner in the irb executable
-        if @CONF[:SHOW_BANNER] && ap_path&.end_with?("exe/irb")
+        if @CONF[:SHOW_BANNER] && startup_banner_executable?(ap_path)
           StartupMessage.display
         end
       end
@@ -63,6 +62,13 @@ module IRB
 
     # Quits irb
     def irb_exit(*) # :nodoc:
+      if Irb.run_nesting_depth <= 1
+        context = IRB.CurrentContext
+        if context && context.io.respond_to?(:save_history) && context.io.support_history_saving?
+          context.io.save_history
+        end
+        Kernel.exit
+      end
       throw :IRB_EXIT, false
     end
 
@@ -71,6 +77,14 @@ module IRB
     # Will raise an Abort exception, or the given `exception`.
     def irb_abort(irb, exception = Abort) # :nodoc:
       irb.context.thread.raise exception, "abort then interrupt!"
+    end
+
+    private
+
+    def startup_banner_executable?(ap_path)
+      return false unless ap_path
+
+      ap_path.end_with?("exe/irb") || ap_path.end_with?("exe/birb")
     end
   end
 

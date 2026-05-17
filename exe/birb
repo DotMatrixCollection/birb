@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+#
+#   birb - OhMyRuby's IRB fork entrypoint
+#
+
+require "irb"
+
+IRB.start(__FILE__)

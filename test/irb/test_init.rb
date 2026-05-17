@@ -39,6 +39,12 @@ module TestIRB
       assert_equal orig, $0
     end
 
+    def test_setup_with_birb_entrypoint_uses_birb_name
+      IRB.setup("/tmp/exe/birb", argv: %w[-f])
+      assert_equal "birb", IRB.conf[:AP_NAME]
+      assert_equal "birb", IRB.conf[:IRB_NAME]
+    end
+
     def test_rc_files
       tmpdir = @tmpdir
       Dir.chdir(tmpdir) do

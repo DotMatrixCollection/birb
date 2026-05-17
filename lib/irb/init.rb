@@ -64,13 +64,13 @@ module IRB # :nodoc:
   # @CONF default setting
   def IRB.init_config(ap_path)
     # default configurations
-    unless ap_path and @CONF[:AP_NAME]
+    unless ap_path
       ap_path = File.join(File.dirname(File.dirname(__FILE__)), "irb.rb")
     end
     @CONF[:VERSION] = version
     @CONF[:AP_NAME] = File::basename(ap_path, ".rb")
 
-    @CONF[:IRB_NAME] = "irb"
+    @CONF[:IRB_NAME] = @CONF[:AP_NAME] == "birb" ? "birb" : "irb"
     @CONF[:IRB_LIB_PATH] = File.dirname(__FILE__)
 
     @CONF[:RC] = true
@@ -197,6 +197,7 @@ module IRB # :nodoc:
     }
 
     @CONF[:COPY_COMMAND] = ENV.fetch("IRB_COPY_COMMAND", nil)
+    @CONF[:BIRB_USE_GUM] = ENV.fetch("BIRB_USE_GUM", "true") != "false"
   end
 
   def IRB.set_measure_callback(type = nil, arg = nil, &block)

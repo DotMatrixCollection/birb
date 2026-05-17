@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "open3"
+
 require_relative "color"
 require_relative "version"
 
@@ -31,7 +33,7 @@ module IRB
 
         # Add a blank line to not immediately touch warning messages
         puts
-        puts output
+        puts render(output)
         puts
       end
 
@@ -48,7 +50,10 @@ module IRB
       end
 
       def build_info_lines
-        version_line = "#{Color.colorize('IRB', [:BOLD])} v#{VERSION} - Ruby #{RUBY_VERSION}"
+        brand = IRB.conf[:IRB_NAME].to_s
+        display_brand = brand.empty? || brand == "irb" ? "IRB" : brand
+        version_label = Color.colorize(display_brand, [:BOLD])
+        version_line = "#{version_label} v#{VERSION} - Ruby #{RUBY_VERSION}"
         tip_line = colorize_tip(TIPS.sample)
         dir_line = Color.colorize(short_pwd, [:CYAN])
 
@@ -68,6 +73,36 @@ module IRB
           "#{colored_logo}  #{info_part}"
         end
         lines.join("\n")
+      end
+
+      def render(output)
+        return output unless birb_gum_enabled?
+
+        styled, status = Open3.capture2e(
+          gum_path, "style",
+          "--border", "rounded",
+          "--border-foreground", "212",
+          "--foreground", "252",
+          "--padding", "0 1",
+          stdin_data: output
+        )
+        status.success? ? styled.chomp : output
+      rescue StandardError
+        output
+      end
+
+      def birb_gum_enabled?
+        IRB.conf[:IRB_NAME].to_s == "birb" &&
+          IRB.conf[:BIRB_USE_GUM] &&
+          STDOUT.tty? &&
+          gum_path
+      end
+
+      def gum_path
+        @gum_path ||= ENV["PATH"].to_s.split(File::PATH_SEPARATOR).find do |dir|
+          path = File.join(dir, "gum")
+          File.file?(path) && File.executable?(path)
+        end
       end
 
       def short_pwd

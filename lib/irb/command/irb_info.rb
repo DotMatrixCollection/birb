@@ -13,6 +13,10 @@ module IRB
         str += "IRB version: #{IRB.version}\n"
         str += "InputMethod: #{IRB.CurrentContext.io.inspect}\n"
         str += "Completion: #{IRB.CurrentContext.io.respond_to?(:completion_info) ? IRB.CurrentContext.io.completion_info : 'off'}\n"
+        if IRB.conf[:IRB_NAME].to_s == "birb"
+          str += "Brand: birb\n"
+          str += "Gum UI: #{IRB::StartupMessage.send(:gum_path) || 'unavailable'}\n"
+        end
         rc_files = IRB.irbrc_files
         str += ".irbrc paths: #{rc_files.join(", ")}\n" if rc_files.any?
         str += "RUBY_PLATFORM: #{RUBY_PLATFORM}\n"

@@ -18,7 +18,13 @@ module IRB
           grep = Regexp.new(match[:grep])
         end
 
-        formatted_inputs = irb_context.io.class::HISTORY.each_with_index.reverse_each.filter_map do |input, index|
+        history = if defined?(IRB::RelineInputMethod) && irb_context.io.class == IRB::RelineInputMethod
+          Reline::HISTORY
+        else
+          irb_context.io.class.const_get(:HISTORY)
+        end
+
+        formatted_inputs = history.each_with_index.reverse_each.filter_map do |input, index|
           next if grep && !input.match?(grep)
 
           header = "#{index}: "

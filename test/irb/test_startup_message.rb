@@ -6,12 +6,33 @@ require_relative "helper"
 
 module TestIRB
   class StartupMessageTest < TestCase
+    def setup
+      @orig_irb_name = IRB.conf[:IRB_NAME]
+      @orig_birb_use_gum = IRB.conf[:BIRB_USE_GUM]
+      IRB.conf[:IRB_NAME] = "irb"
+      IRB.conf[:BIRB_USE_GUM] = false
+    end
+
+    def teardown
+      IRB.conf[:IRB_NAME] = @orig_irb_name
+      IRB.conf[:BIRB_USE_GUM] = @orig_birb_use_gum
+    end
+
     def test_display_includes_version_info
       output, = capture_output { IRB::StartupMessage.display }
 
       assert_match(/IRB/, output)
       assert_match(/v#{Regexp.escape(IRB::VERSION)}/, output)
       assert_match(/Ruby #{Regexp.escape(RUBY_VERSION)}/, output)
+    end
+
+    def test_display_uses_birb_branding_when_configured
+      IRB.conf[:IRB_NAME] = "birb"
+
+      output, = capture_output { IRB::StartupMessage.display }
+
+      plain = output.gsub(/\e\[\d+m/, "")
+      assert_match(/birb/, plain)
     end
 
     def test_display_includes_a_tip

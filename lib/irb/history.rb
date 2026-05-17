@@ -36,15 +36,23 @@ module IRB
       true
     end
 
+    def history_storage
+      if defined?(RelineInputMethod) && self.class == RelineInputMethod
+        Reline::HISTORY
+      else
+        self.class.const_get(:HISTORY)
+      end
+    end
+
     def reset_history_counter
-      @loaded_history_lines = self.class::HISTORY.size
+      @loaded_history_lines = history_storage.size
     end
 
     def load_history
       history_file = History.history_file
       return unless File.exist?(history_file.to_s)
 
-      history = self.class::HISTORY
+      history = history_storage
 
       File.open(history_file, "r:#{IRB.conf[:LC_MESSAGES].encoding}") do |f|
         f.each { |l|
@@ -72,7 +80,7 @@ module IRB
         return
       end
 
-      history = self.class::HISTORY.to_a
+      history = history_storage.to_a
 
       if File.exist?(history_file) &&
           File.mtime(history_file) != @loaded_history_mtime
