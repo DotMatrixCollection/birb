@@ -268,6 +268,23 @@ module TestIRB
       assert_equal([], argv)
     end
 
+    def test_noscript_preserves_dash_prefixed_arguments
+      argv = %w[--noscript -f --nobanner script.rb]
+      IRB.setup(eval("__FILE__"), argv: argv)
+
+      assert_nil IRB.conf[:SCRIPT]
+      assert_equal(%w[-f --nobanner script.rb], argv)
+    end
+
+    def test_script_after_noscript_reenables_option_parsing
+      argv = %w[--noscript --script -f script.rb]
+      IRB.setup(eval("__FILE__"), argv: argv)
+
+      assert_equal("script.rb", IRB.conf[:SCRIPT])
+      assert_equal([], argv)
+      assert_equal(false, IRB.conf[:RC])
+    end
+
     def test_dash
       argv = %w[-]
       IRB.setup(eval("__FILE__"), argv: argv)

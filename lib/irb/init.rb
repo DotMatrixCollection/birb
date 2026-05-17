@@ -254,7 +254,13 @@ module IRB # :nodoc:
   # option analyzing
   def IRB.parse_opts(argv: ::ARGV)
     load_path = []
+    noscript = false
     while opt = argv.shift
+      if noscript && opt != "--script" && opt != "--noscript" && opt != "--"
+        argv.unshift(opt)
+        break
+      end
+
       case opt
       when "-f"
         @CONF[:RC] = false
