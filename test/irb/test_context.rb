@@ -106,6 +106,15 @@ module TestIRB
       assert_include err, "IRB::Context#prompt_n= is deprecated"
     end
 
+    def test_parse_input_recognizes_exit_as_command
+      statement = @context.parse_input("exit", false)
+
+      assert_kind_of IRB::Statement::Command, statement
+      assert_equal "exit", statement.code
+      assert_equal IRB::Command::Exit, statement.command_class
+      assert_equal "", statement.arg
+    end
+
     def test_output_to_pipe
       require 'stringio'
       input = TestInputMethod.new(["n=1"])
